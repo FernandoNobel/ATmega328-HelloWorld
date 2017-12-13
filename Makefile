@@ -143,10 +143,14 @@ cleanBBB:
 configureBBB:
 	sshpass -p 1234 ssh -q root@192.168.7.2 $(CONF_BBB)
 
+# Serial monitor to communicate with the ATmega
 screenBBB:
 	sshpass -p 1234 ssh -qt root@192.168.7.2 "picocom -b $(BAUD_RATE) -r -l $(UART_DEV) --echo --omap crlf --imap lfcrlf"
+
+# Shutdown properly the BBB
 shutdownBBB:
 	sshpass -p 1234 ssh -qt root@192.168.7.2 "shutdown -h now & exit"
+
 # Confugre pin P9_14 for pwm
 pwmBBB:
 	echo BB-PWM1 > /sys/devices/platform/bone_capemgr/slots
