@@ -145,3 +145,15 @@ configureBBB:
 
 screenBBB:
 	sshpass -p 1234 ssh -qt root@192.168.7.2 "picocom -b $(BAUD_RATE) -r -l $(UART_DEV) --echo --omap crlf --imap lfcrlf"
+shutdownBBB:
+	sshpass -p 1234 ssh -qt root@192.168.7.2 "shutdown -h now & exit"
+# Confugre pin P9_14 for pwm
+pwmBBB:
+	echo BB-PWM1 > /sys/devices/platform/bone_capemgr/slots
+	cd /sys/class/pwm
+	cd pwmchip0
+	echo 0 > export
+	cd pwm0
+	echo 1000000000 > period
+	echo 800000000 > duty_cycle
+	echo 1 > enable
