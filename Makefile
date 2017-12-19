@@ -51,6 +51,9 @@ CPPSRC = $(wildcard src/*.cpp) $(wildcard lib/*.cpp)
 # Object list.
 OBJ = $(addprefix build/, $(CPPSRC:.cpp=.o)) $(addprefix build/, $(SRC:.c=.o))
 
+# Dependencies list.
+DEP = $(OBJ:.o=.d)
+
 # Where to search the .h files.
 INCLUDE_FILES = -I src -I lib
 
@@ -99,6 +102,9 @@ dir:
 
 #---------------- Build Rules -----------------------------------------------
 
+# pull in dependency info for *existing* .o files
+-include $(DEP)
+
 # Rule for buildind objects from src directory.
 build/src/%.o: src/%.c
 	$(CC) $(CC_FLAGS) $(INCLUDE_FILES) $< -o $@
@@ -145,7 +151,7 @@ configureBBB:
 
 # Serial monitor to communicate with the ATmega.
 screenBBB:
-	sshpass -p 1234 ssh -qt root@192.168.7.2 "picocom -b $(BAUD_RATE) -r -l $(UART_DEV)  --omap crlf --imap lfcrlf"
+	sshpass -p 1234 ssh -qt root@192.168.7.2 "picocom -b $(BAUD_RATE) -r -l $(UART_DEV) --echo --omap crlf --imap lfcrlf"
 
 # Shutdown properly the BBB.
 shutdownBBB:
