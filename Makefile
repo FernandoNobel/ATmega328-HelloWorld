@@ -145,7 +145,7 @@ configureBBB:
 
 # Serial monitor to communicate with the ATmega.
 screenBBB:
-	sshpass -p 1234 ssh -qt root@192.168.7.2 "picocom -b $(BAUD_RATE) -r -l $(UART_DEV) --echo --omap crlf --imap lfcrlf"
+	sshpass -p 1234 ssh -qt root@192.168.7.2 "picocom -b $(BAUD_RATE) -r -l $(UART_DEV)  --omap crlf --imap lfcrlf"
 
 # Shutdown properly the BBB.
 shutdownBBB:
