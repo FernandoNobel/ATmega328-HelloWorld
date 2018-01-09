@@ -102,8 +102,7 @@ dir:
 	
 # Actualize the Makefile to the latest version of GitHub
 actualize:
-	rm Makefile
-	wget https://raw.githubusercontent.com/FernandoNobel/ATmega328-HelloWorld/master/Makefile
+	wget https://raw.githubusercontent.com/FernandoNobel/ATmega328-HelloWorld/master/Makefile -O ./Makefile
 
 #---------------- Build Rules -----------------------------------------------
 
