@@ -91,6 +91,7 @@ BAUD_RATE = 9600
 all: hex 
 program: uploadBBB programBBB cleanBBB
 monitor: screenBBB
+run: all program monitor
 
 # Make the directory structe for the project.
 dir:
