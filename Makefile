@@ -72,6 +72,11 @@ CONF_BBB += "&& echo $(RST_PIN) > /sys/class/gpio/export"
 CONF_BBB += "&& echo "out" > /sys/class/gpio/gpio$(RST_PIN)/direction"
 CONF_BBB += "&& echo 1 > /sys/class/gpio/gpio$(RST_PIN)/value"
 
+# Reset the AVR
+RST_BBB = "echo 0 > /sys/class/gpio/gpio$(RST_PIN)/value"
+RST_BBB += "&& sleep 0.1"
+RST_BBB += "&& echo 1 > /sys/class/gpio/gpio$(RST_PIN)/value"
+
 # Program the AVR usien avrdude in the BBB.
 PROG_BBB  = "echo 0 > /sys/class/gpio/gpio$(RST_PIN)/value"
 PROG_BBB += "&& sleep 0.1"
@@ -141,6 +146,9 @@ clean:
 uploadBBB:
 	sshpass -p 1234 scp -q bin/$(TARGET).hex root@192.168.7.2:/root/$(TARGET).hex
 
+# Reset the AVR
+resestBBB: 
+	sshpass -p 1234 ssh -q root@192.168.7.2 $(RST_BBB)
 # Program the AVR with the BBB.
 programBBB:
 	sshpass -p 1234 ssh -q root@192.168.7.2 $(PROG_BBB)
