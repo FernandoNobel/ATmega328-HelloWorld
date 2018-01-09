@@ -77,10 +77,8 @@ RST_BBB = "echo 0 > /sys/class/gpio/gpio$(RST_PIN)/value"
 RST_BBB += "&& sleep 0.1"
 RST_BBB += "&& echo 1 > /sys/class/gpio/gpio$(RST_PIN)/value"
 
-# Program the AVR usien avrdude in the BBB.
-PROG_BBB  = "echo 0 > /sys/class/gpio/gpio$(RST_PIN)/value"
-PROG_BBB += "&& sleep 0.1"
-PROG_BBB += "&& echo 1 > /sys/class/gpio/gpio$(RST_PIN)/value"
+# Program the AVR using avrdude in the BBB.
+PROG_BBB  = $(RST_BBB)
 PROG_BBB += "&& avrdude -c arduino -p m328p -v -b 57600 -P $(UART_DEV) -U flash:w:/root/$(TARGET).hex"
 
 # Serial monitor options.
