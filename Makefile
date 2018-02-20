@@ -85,6 +85,26 @@ PROG_BBB += "&& avrdude -c arduino -p m328p -v -b 57600 -P $(UART_DEV) -U flash:
 # Usually 300, 1200, 9600 or 19200. This affects transmission as well as receive speed.
 BAUD_RATE = 9600
 
+# PWM Init command
+
+PWM_BBB  = "echo BB-PWM1 > /sys/devices/platform/bone_capemgr/slots"
+PWM_BBB += "&& cd /sys/class/pwm"
+PWM_BBB += "&& cd pwmchip0"
+PWM_BBB += "&& echo 0 > export"
+PWM_BBB += "&& cd pwm0"
+PWM_BBB += "&& echo 1000000000 > period"
+PWM_BBB += "&& echo 800000000 > duty_cycle"
+PWM_BBB += "&& echo 1 > enable"
+
+# PWM Options command
+
+PWM_OP_BBB  = "cd /sys/class/pwm"
+PWM_OP_BBB += "&& cd pwmchip0"
+PWM_OP_BBB += "&& cd pwm0"
+PWM_OP_BBB += "&& echo 800000 > duty_cycle"
+PWM_OP_BBB += "&& echo 1000000 > period"
+
+
 #============================================================================
 
 # Compile the code.
@@ -169,12 +189,8 @@ shutdownBBB:
 	sshpass -p 1234 ssh -qt root@192.168.7.2 "shutdown -h now & exit"
 
 # Confugre pin P9_14 for pwm.
-pwmBBB:
-	echo BB-PWM1 > /sys/devices/platform/bone_capemgr/slots
-	cd /sys/class/pwm
-	cd pwmchip0
-	echo 0 > export
-	cd pwm0
-	echo 1000000000 > period
-	echo 800000000 > duty_cycle
-	echo 1 > enable
+pwmInitBBB:
+	sshpass -p 1234 ssh -q root@192.168.7.2 $(PWM_BBB)
+
+pwmOptionsBBB:
+	sshpass -p 1234 ssh -q root@192.168.7.2 $(PWM_OP_BBB)
