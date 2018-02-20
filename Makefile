@@ -45,8 +45,8 @@ CPP_FLAGS = $(GENERAL_FLAGS) -fno-exceptions -std=c++11
 CC_FLAGS  = $(GENERAL_FLAGS)
 
 # Source code.
-SRC = $(wildcard src/*.c) $(wildcard lib/*.c)
-CPPSRC = $(wildcard src/*.cpp) $(wildcard lib/*.cpp)
+SRC = $(wildcard src/*.c) $(wildcard lib/*.c) $(wildcard src/*/*.c) 
+CPPSRC = $(wildcard src/*.cpp) $(wildcard lib/*.cpp) $(wildcard src/*/*.cpp) 
 
 # Object list.
 OBJ = $(addprefix build/, $(CPPSRC:.cpp=.o)) $(addprefix build/, $(SRC:.c=.o))
@@ -133,18 +133,13 @@ actualize:
 # pull in dependency info for *existing* .o files
 -include $(DEP)
 
-# Rule for buildind objects from src directory.
-build/src/%.o: src/%.c
+# Rules for buildind objects.
+build/%.o: %.c
+	@mkdir -p object ./build/$(dir $<)
 	$(CC) $(CC_FLAGS) $(INCLUDE_FILES) $< -o $@
 
-build/src/%.o: src/%.cpp
-	$(CPP) $(CPP_FLAGS) $(INCLUDE_FILES) $< -o $@
-
-# Rule for buildind objects from lib directory.
-build/lib/%.o: lib/%.c
-	$(CC) $(CC_FLAGS) $(INCLUDE_FILES) $< -o $@
-
-build/lib/%.o: lib/%.cpp
+build/%.o: %.cpp
+	@mkdir -p object ./build/$(dir $<)
 	$(CPP) $(CPP_FLAGS) $(INCLUDE_FILES) $< -o $@
 
 # Make the .hex file.
@@ -156,9 +151,7 @@ hex: $(OBJ)
 # Clean all generated files during compilation.
 clean:
 	rm -f bin/*
-	rm -f build/src/*
-	rm -f build/lib/*
-
+	rm -r build
 #---------------- BBB functions ---------------------------------------------
 
 # Upload the .hex file to the BBB.
