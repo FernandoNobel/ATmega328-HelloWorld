@@ -40,8 +40,8 @@ OBJ_COPY = avr-objcopy
 #---------------- Compiler Options C++ --------------------------------------
 
 # Compile flags.
-GENERAL_FLAGS = -c -g -Os -Wall -ffunction-sections -fdata-sections -mmcu=$(MCU) -DF_CPU=$(F_CPU)L -MMD -DUSB_VID=null -DUSB_PID=null -DARDUINO=106 -std=c++11
-CPP_FLAGS = $(GENERAL_FLAGS) -fno-exceptions
+GENERAL_FLAGS = -c -g -Os -Wall -ffunction-sections -fdata-sections -mmcu=$(MCU) -DF_CPU=$(F_CPU)L -MMD -DUSB_VID=null -DUSB_PID=null -DARDUINO=106
+CPP_FLAGS = $(GENERAL_FLAGS) -fno-exceptions -std=c++11
 CC_FLAGS  = $(GENERAL_FLAGS)
 
 # Source code.
