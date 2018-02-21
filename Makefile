@@ -179,7 +179,7 @@ screenBBB:
 
 # Shutdown properly the BBB.
 shutdownBBB:
-	sshpass -p 1234 ssh -qt root@192.168.7.2 "shutdown -h now & exit"
+	sshpass -p 1234 ssh -qt root@192.168.7.2 "shutdown -h now && exit"
 
 # Confugre pin P9_14 for pwm.
 pwmInitBBB:
