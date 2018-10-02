@@ -133,6 +133,11 @@ clean:
 	rm -f build/src/*
 	rm -f build/lib/*
 
+#----------------- GitHub commands ------------------------------------------
+
+git_diff:
+	git diff master Makefile
+
 #---------------- BBB functions ---------------------------------------------
 
 # Upload the .hex file to the BBB.
