@@ -107,18 +107,13 @@ dir:
 # pull in dependency info for *existing* .o files
 -include $(DEP)
 
-# Rule for buildind objects from src directory.
-build/src/%.o: src/%.c
+# Rules for buildind objects.
+build/%.o: %.c
+	@mkdir -p object ./build/$(dir $<)
 	$(CC) $(CC_FLAGS) $(INCLUDE_FILES) $< -o $@
 
-build/src/%.o: src/%.cpp
-	$(CPP) $(CPP_FLAGS) $(INCLUDE_FILES) $< -o $@
-
-# Rule for buildind objects from lib directory.
-build/lib/%.o: lib/%.c
-	$(CC) $(CC_FLAGS) $(INCLUDE_FILES) $< -o $@
-
-build/lib/%.o: lib/%.cpp
+build/%.o: %.cpp
+	@mkdir -p object ./build/$(dir $<)
 	$(CPP) $(CPP_FLAGS) $(INCLUDE_FILES) $< -o $@
 
 # Make the .hex file.
@@ -129,9 +124,9 @@ hex: $(OBJ)
 
 # Clean all generated files during compilation.
 clean:
-	rm -f bin/*
-	rm -f build/src/*
-	rm -f build/lib/*
+	rm -rf bin/*
+	rm -rf build/src/*
+	rm -rf build/lib/*
 
 #----------------- GitHub commands ------------------------------------------
 
