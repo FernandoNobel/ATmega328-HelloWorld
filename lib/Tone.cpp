@@ -535,7 +535,7 @@ ISR(TIMER1_COMPA_vect)
 
 
 #ifdef USE_TIMER2
-ISR(TIMER2_COMPA_vect)
+/*ISR(TIMER2_COMPA_vect)
 {
 
   if (timer2_toggle_count != 0)
@@ -555,7 +555,7 @@ ISR(TIMER2_COMPA_vect)
 //    disableTimer(2);
 //    *timer2_pin_port &= ~(timer2_pin_mask);  // keep pin low after stop
   }
-}
+}*/
 #endif
 
 

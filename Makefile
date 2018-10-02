@@ -45,8 +45,8 @@ CPP_FLAGS = $(GENERAL_FLAGS) -fno-exceptions
 CC_FLAGS  = $(GENERAL_FLAGS)
 
 # Source code.
-SRC = $(wildcard src/*.c) $(wildcard lib/*.c)
-CPPSRC = $(wildcard src/*.cpp) $(wildcard lib/*.cpp)
+SRC = $(wildcard src/*.c) $(wildcard lib/*.c) $(wildcard src/*/*.c)
+CPPSRC = $(wildcard src/*.cpp) $(wildcard lib/*.cpp) $(wildcard src/*/*.cpp)
 
 # Object list.
 OBJ = $(addprefix build/, $(CPPSRC:.cpp=.o)) $(addprefix build/, $(SRC:.c=.o))
